@@ -72,14 +72,14 @@ import matplotlib.pyplot as plt
 import sklearn
 print(sklearn.__version__)
 #%%
-breast_cancer = pd.read_csv('rules.csv')
+FILE1 = pd.read_csv('rules.csv')
 #%%
 clf = DecisionTreeClassifier()
-clf.fit(breast_cancer.confidence
-, breast_cancer.support
+clf.fit(FILE1.confidence
+, FILE1.support
 )
-pred_train = clf.predict(breast_cancer.confidence)
-pred_test = clf.predict(breast_cancer.support)
+pred_train = clf.predict(FILE1.confidence)
+pred_test = clf.predict(FILE1.support)
 #%%
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
@@ -88,15 +88,15 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 enc = OneHotEncoder(handle_unknown="ignore")
 ct = ColumnTransformer(
     [
-        ("ohe", enc, breast_cancer.antecedents,breast_cancer.consequents
+        ("ohe", enc, FILE1.antecedents,FILE1.consequents
 
 ),
     ],
     remainder="passthrough",
 )
 
-x_train = ct.fit_transform(breast_cancer.confidence)
-x_test = ct.transform( breast_cancer.support)
+x_train = ct.fit_transform(FILE1.confidence)
+x_test = ct.transform( FILE1.support)
 from sklearn.tree import plot_tree
 
 plot_tree(clf, filled=True, max_depth=6, feature_names=ct.get_feature_names())
